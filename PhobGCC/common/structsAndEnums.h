@@ -221,6 +221,8 @@ struct ControlConfig{
 	const int analogScalerMin;
 	const int analogScalerMax;
 	const int analogScalerDefault;
+	const int analogScalerFactoryA;
+	const int analogScalerFactoryC;
 	int tournamentToggle;
 	const int tournamentToggleMin;
 	const int tournamentToggleMax;

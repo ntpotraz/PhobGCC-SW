@@ -63,8 +63,8 @@ ControlConfig _controls{
 	.snapbackMin = -10,
 	.snapbackMax = 10,
 	.snapbackDefault = 4,
-	.snapbackFactoryAX = 4,
-	.snapbackFactoryAY = 4,
+	.snapbackFactoryAX = -10,
+	.snapbackFactoryAY = -6,
 	.axSmoothing = 0,
 	.aySmoothing = 0,
 	.cxSmoothing = 0,
@@ -73,7 +73,7 @@ ControlConfig _controls{
 	.smoothingMax = 9,
 	.snapbackFactoryCX = 0,
 	.snapbackFactoryCY = 0,
-	.smoothingFactoryAX = 0,
+	.smoothingFactoryAX = 4,
 	.smoothingFactoryAY = 0,
 	.axWaveshaping = 0,
 	.ayWaveshaping = 0,
@@ -81,8 +81,8 @@ ControlConfig _controls{
 	.cyWaveshaping = 0,
 	.waveshapingMin = 0,
 	.waveshapingMax = 15,
-	.waveshapingFactoryAX = 0,
-	.waveshapingFactoryAY = 0,
+	.waveshapingFactoryAX = 14,
+	.waveshapingFactoryAY = 5,
 	.waveshapingFactoryCX = 0,
 	.waveshapingFactoryCY = 0,
 	.astickCardinalSnapping = 6,
@@ -95,6 +95,8 @@ ControlConfig _controls{
 	.analogScalerMin = 82,
 	.analogScalerMax = 125,
 	.analogScalerDefault = 100,
+	.analogScalerFactoryA = 106,
+	.analogScalerFactoryC = 100,
 	.tournamentToggle = 0,
 	.tournamentToggleMin = 0,
 	.tournamentToggleMax = 5,
@@ -1357,10 +1359,10 @@ void resetDefaults(HardReset reset, ControlConfig &controls, FilterGains &gains,
 		controls.cxWaveshaping = controls.waveshapingMin;
 		controls.cyWaveshaping = controls.waveshapingMin;
 	}
-	setWaveshapingSetting(controls.waveshapingMin, ASTICK, XAXIS);
-	setWaveshapingSetting(controls.waveshapingMin, ASTICK, YAXIS);
-	setWaveshapingSetting(controls.waveshapingMin, CSTICK, XAXIS);
-	setWaveshapingSetting(controls.waveshapingMin, CSTICK, YAXIS);
+	setWaveshapingSetting(controls.axWaveshaping, ASTICK, XAXIS);
+	setWaveshapingSetting(controls.ayWaveshaping, ASTICK, YAXIS);
+	setWaveshapingSetting(controls.cxWaveshaping, CSTICK, XAXIS);
+	setWaveshapingSetting(controls.cyWaveshaping, CSTICK, YAXIS);
 
 	controls.lTriggerOffset = controls.triggerMin;
 	controls.rTriggerOffset = controls.triggerMin;
@@ -1386,8 +1388,14 @@ void resetDefaults(HardReset reset, ControlConfig &controls, FilterGains &gains,
 	setCardinalSnappingSetting(controls.cstickCardinalSnapping, CSTICK);
 
 	//Analog scaling
+if(reset == FACTORY) {
+	controls.astickAnalogScaler = controls.analogScalerFactoryA;
+	controls.cstickAnalogScaler = controls.analogScalerFactoryC;
+} else {
 	controls.astickAnalogScaler = controls.analogScalerDefault;
 	controls.cstickAnalogScaler = controls.analogScalerDefault;
+}
+
 	setAnalogScalerSetting(controls.astickAnalogScaler, ASTICK);
 	setAnalogScalerSetting(controls.cstickAnalogScaler, CSTICK);
 
